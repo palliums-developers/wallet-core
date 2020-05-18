@@ -48,6 +48,36 @@
         "symbol": "BTC",
         "decimals": 8,
         "blockchain": "Bitcoin",
+        "derivationPath": "m/84'/0'/0'/0/0",
+        "curve": "secp256k1",
+        "publicKeyType": "secp256k1",
+        "p2pkhPrefix": 0,
+        "p2shPrefix": 5,
+        "hrp": "bc",
+        "publicKeyHasher": "sha256ripemd",
+        "base58Hasher": "sha256d",
+        "xpub": "zpub",
+        "xprv": "zprv",
+        "explorer": {
+            "url": "https://blockchair.com",
+            "txPath": "/bitcoin/transaction/",
+            "accountPath": "/bitcoin/address/",
+            "sampleTx": "0607f62530b68cfcc91c57a1702841dd399a899d0eecda8e31ecca3f52f01df2",
+            "sampleAccount": "17A16QmavnUfCW11DAApiJxp7ARnxN5pGX"
+        },
+        "info": {
+            "url": "https://bitcoin.org",
+            "client": "https://github.com/trezor/blockbook",
+            "clientPublic": "",
+            "clientDocs": "https://github.com/trezor/blockbook/blob/master/docs/api.md"
+        }
+    },
+    {
+        "id": "bitcointestnet",
+        "name": "Bitcoin Testnet",
+        "symbol": "",
+        "decimals": 8,
+        "blockchain": "Bitcoin",
         "derivationPath": "m/84'/1'/0'/0/0",
         "curve": "secp256k1",
         "publicKeyType": "secp256k1",
@@ -95,6 +125,34 @@
         },
         "info": {
             "url": "https://bitcoincash.org",
+            "client": "https://github.com/trezor/blockbook",
+            "clientPublic": "",
+            "clientDocs": "https://github.com/trezor/blockbook/blob/master/docs/api.md"
+        }
+    },
+    {
+        "id": "bitcoingold",
+        "name": "Bitcoin Gold",
+        "symbol": "BTG",
+        "decimals": 8,
+        "blockchain": "Bitcoin",
+        "derivationPath": "m/84'/156'/0'/0/0",
+        "curve": "secp256k1",
+        "publicKeyType": "secp256k1",
+        "p2pkhPrefix": 38,
+        "p2shPrefix": 23,
+        "hrp": "btg",
+        "publicKeyHasher": "sha256ripemd",
+        "base58Hasher": "sha256d",
+        "xpub": "zpub",
+        "xprv": "zprv",
+        "explorer": {
+            "url": "https://explorer.bitcoingold.org/insight",
+            "txPath": "/tx/",
+            "accountPath": "/address/"
+        },
+        "info": {
+            "url": "https://bitcoingold.org",
             "client": "https://github.com/trezor/blockbook",
             "clientPublic": "",
             "clientDocs": "https://github.com/trezor/blockbook/blob/master/docs/api.md"
@@ -1329,6 +1387,28 @@
             "client": "https://github.com/filecoin-project/lotus",
             "clientPublic": "",
             "clientDocs": "https://docs.lotu.sh"
+        }
+    },
+    {
+        "id": "elrond",
+        "name": "Elrond",
+        "symbol": "ERD",
+        "decimals": 18,
+        "blockchain": "ElrondNetwork",
+        "derivationPath": "m/44'/508'/0'/0'/0'",
+        "curve": "ed25519",
+        "publicKeyType": "ed25519",
+        "hrp": "erd",
+        "explorer": {
+            "url": "https://explorer.elrond.com",
+            "txPath": "/transactions/",
+            "accountPath": "/address/"
+        },
+        "info": {
+            "url": "https://elrond.com/",
+            "client": "https://github.com/ElrondNetwork/elrond-go",
+            "clientPublic": "https://api.elrond.com",
+            "clientDocs": "https://docs.elrond.com"
         }
     }
 ]

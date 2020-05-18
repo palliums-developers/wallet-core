@@ -25,8 +25,10 @@ enum TWCoinType {
     TWCoinTypeAeternity = 457,
     TWCoinTypeAion = 425,
     TWCoinTypeBinance = 714,
-    TWCoinTypeBitcoin = 1,
+    TWCoinTypeBitcoin = 0,
+    TWCoinTypeBitcoinTestnet = 1,
     TWCoinTypeBitcoinCash = 145,
+    TWCoinTypeBitcoinGold = 156,
     TWCoinTypeCallisto = 820,
     TWCoinTypeCardano = 1815, // Note: Cardano Shelley testnet uses purpose 1852 (not 44) 1852/1815
     TWCoinTypeCosmos = 118,
@@ -79,6 +81,7 @@ enum TWCoinType {
     TWCoinTypeKusama = 434,
     TWCoinTypePolkadot = 354,
     TWCoinTypeFilecoin = 461,
+    TWCoinTypeElrond = 508,
 };
 
 /// Returns the blockchain for a coin type.

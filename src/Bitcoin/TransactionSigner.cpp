@@ -9,6 +9,7 @@
 #include "TransactionInput.h"
 #include "TransactionOutput.h"
 #include "UnspentSelector.h"
+#include "SigHashType.h"
 
 #include "../BinaryCoding.h"
 #include "../Hash.h"
@@ -21,12 +22,18 @@ using namespace TW::Bitcoin;
 
 template <typename Transaction, typename TransactionBuilder>
 Result<Transaction> TransactionSigner<Transaction, TransactionBuilder>::sign() {
+    if (transaction.inputs.size() == 0 || plan.utxos.size() == 0) {
+        return Result<Transaction>::failure("Missing inputs or UTXOs");
+    }
+
     signedInputs.clear();
     std::copy(std::begin(transaction.inputs), std::end(transaction.inputs),
               std::back_inserter(signedInputs));
 
-    const bool hashSingle =
-        ((input.hash_type() & ~TWBitcoinSigHashTypeAnyoneCanPay) == TWBitcoinSigHashTypeSingle);
+    if (plan.utxos.size() == 0) {
+        return Result<Transaction>::failure("Plan without UTXOs");
+    }
+    const auto hashSingle = hashTypeIsSingle(static_cast<enum TWBitcoinSigHashType>(input.hash_type()));
     for (auto i = 0; i < plan.utxos.size(); i += 1) {
         auto& utxo = plan.utxos[i];
 
@@ -35,9 +42,11 @@ Result<Transaction> TransactionSigner<Transaction, TransactionBuilder>::sign() {
             continue;
         }
         auto script = Script(utxo.script().begin(), utxo.script().end());
-        auto result = sign(script, i, utxo);
-        if (!result) {
-            return Result<Transaction>::failure(result.error());
+        if (i < transaction.inputs.size()) {
+            auto result = sign(script, i, utxo);
+            if (!result) {
+                return Result<Transaction>::failure(result.error());
+            }
         }
     }
 
@@ -50,6 +59,8 @@ Result<Transaction> TransactionSigner<Transaction, TransactionBuilder>::sign() {
 template <typename Transaction, typename TransactionBuilder>
 Result<void> TransactionSigner<Transaction, TransactionBuilder>::sign(Script script, size_t index,
                                                   const Bitcoin::Proto::UnspentTransaction& utxo) {
+    assert(index < transaction.inputs.size());
+
     Script redeemScript;
     std::vector<Data> results;
     std::vector<Data> witnessStack;
@@ -169,7 +180,7 @@ Result<std::vector<Data>> TransactionSigner<Transaction, TransactionBuilder>::si
         }
         results.resize(required + 1);
         return Result<std::vector<Data>>::success(std::move(results));
-    } else if (script.matchPayToPubkey(data)) {
+    } else if (script.matchPayToPublicKey(data)) {
         auto keyHash = TW::Hash::ripemd(TW::Hash::sha256(data));
         auto key = keyForPublicKeyHash(keyHash);
         if (key.empty()) {
@@ -183,7 +194,7 @@ Result<std::vector<Data>> TransactionSigner<Transaction, TransactionBuilder>::si
             return Result<std::vector<Data>>::failure("Failed to sign.");
         }
         return Result<std::vector<Data>>::success({signature});
-    } else if (script.matchPayToPubkeyHash(data)) {
+    } else if (script.matchPayToPublicKeyHash(data)) {
         auto key = keyForPublicKeyHash(data);
         if (key.empty()) {
             // Error: Missing keyxs
