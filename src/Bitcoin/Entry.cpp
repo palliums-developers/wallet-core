@@ -17,6 +17,7 @@ using namespace std;
 bool Entry::validateAddress(TWCoinType coin, const string& address, TW::byte p2pkh, TW::byte p2sh, const char* hrp) const {
     switch (coin) {
         case TWCoinTypeBitcoin:
+        case TWCoinTypeBitcoinTestnet:
         case TWCoinTypeDigiByte:
         case TWCoinTypeLitecoin:
         case TWCoinTypeMonacoin:
