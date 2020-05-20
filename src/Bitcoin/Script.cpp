@@ -24,7 +24,6 @@
 #include "OpCodes.h"
 
 #include <algorithm>
-#include <cassert>
 #include <set>
 
 using namespace TW;

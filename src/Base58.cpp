@@ -12,6 +12,8 @@
 #include <algorithm>
 #include <cctype>
 
+#include <assert.h>
+
 using namespace TW;
 
 // clang-format off
